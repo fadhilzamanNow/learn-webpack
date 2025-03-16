@@ -1,12 +1,23 @@
-import path from "path";
-import webpack from "webpack"
-import { fileURLToPath } from "url";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
 const config : webpack.Configuration = {
+    context : import.meta.dirname + "/src",
     mode : "production",
-    entry : "./src/index.ts",
+    //multiple main entry
+    //entry : ["./index.ts","./index2.ts"],  
+    //object multiple  entry 
+    entry : {
+        "main" : {
+            import : "./index.ts"
+        },
+        "other" : {
+            import : "./index2.ts"
+        }
+    },
     output : {
-        path : "/home/progz/Documents/projects/learn-webpack/dist",
-        filename : "final-bundle.js"
+        path : import.meta.dirname + "/dist",
+        filename : "[name]-[contenthash].bundle.js",
     },
     module : {
         rules : [
@@ -20,6 +31,6 @@ const config : webpack.Configuration = {
     resolve : {
         extensions : [".tsx",".ts",".js"]
     },
+    plugins : [new HtmlWebpackPlugin()]
 }
-
 export default config;
