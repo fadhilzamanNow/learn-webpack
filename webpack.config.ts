@@ -1,6 +1,5 @@
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-
 const config : webpack.Configuration = {
     context : import.meta.dirname + "/src",
     mode : "production",
@@ -17,7 +16,9 @@ const config : webpack.Configuration = {
             dependOn : "together"
         },
         "together" : {
-            import : "./source.ts"
+            import : "./source.ts",
+            filename : "addtogether",
+            //runtime : "a1"
         }
     },
     output : {
@@ -30,12 +31,19 @@ const config : webpack.Configuration = {
                 test : /\.tsx?$/,
                 use : "ts-loader",
                 exclude : /node_modules/,
+            },
+            {
+                test : /\.css$/,
+                use : [
+                    "style-loader","css-loader"
+                ],
+                exclude : /node_modules/,
             }
         ]
     },
     resolve : {
         extensions : [".tsx",".ts",".js"]
     },
-    plugins : [new HtmlWebpackPlugin()]
+    plugins : [new HtmlWebpackPlugin({template : "./index.html"})]
 }
 export default config;
