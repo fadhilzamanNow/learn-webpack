@@ -22,6 +22,7 @@ const config : webpack.Configuration = {
         }
     },
     output : {
+        asyncChunks : true,
         path : import.meta.dirname + "/dist",
         filename : "[name]-[contenthash].bundle.js",
     },
@@ -35,7 +36,12 @@ const config : webpack.Configuration = {
             {
                 test : /\.css$/,
                 use : [
-                    "style-loader","css-loader"
+                   {
+                    loader : "style-loader"
+                   },
+                   {
+                    loader : "css-loader"
+                   }
                 ],
                 exclude : /node_modules/,
             }
@@ -44,6 +50,6 @@ const config : webpack.Configuration = {
     resolve : {
         extensions : [".tsx",".ts",".js"]
     },
-    plugins : [new HtmlWebpackPlugin({template : "./index.html"})]
+    plugins : [new HtmlWebpackPlugin({template : "./index.html"}), new webpack.ProgressPlugin()]
 }
 export default config;
