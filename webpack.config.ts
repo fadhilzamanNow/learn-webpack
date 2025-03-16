@@ -9,10 +9,15 @@ const config : webpack.Configuration = {
     //object multiple  entry 
     entry : {
         "main" : {
-            import : "./index.ts"
+            import : "./index.ts",
+            dependOn : "together"
         },
         "other" : {
-            import : "./index2.ts"
+            import : "./index2.ts",
+            dependOn : "together"
+        },
+        "together" : {
+            import : "./source.ts"
         }
     },
     output : {
