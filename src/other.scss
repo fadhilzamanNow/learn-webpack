@@ -1,0 +1,12 @@
+@mixin theme($background,$color){
+    background : $background;
+    color : $color;
+}
+
+h1 {
+    @include theme($background : green, $color : white);
+}
+
+p {
+    @include theme(yellow,white)
+}
