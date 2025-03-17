@@ -1,5 +1,5 @@
 const Mantap = () => {
-    console.log("Mantap cukkk");
+    console.log("Mantaspss scukkk");
 }
 
 export default Mantap;

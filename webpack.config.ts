@@ -4,29 +4,75 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const config: webpack.Configuration = {
   context: import.meta.dirname + "/src",
-  mode: "production",
+  mode : "development",
   //multiple main entry
   //entry : ["./index.ts","./index2.ts"],
   //object multiple  entry
   entry: {
     main: {
       import: "./index.ts",
-      dependOn: "together",
     },
     other: {
       import: "./index2.ts",
-      dependOn: "together",
     },
-    together: {
+   /*  together: {
       import: "./source.ts",
-      filename: "addtogether",
-      //runtime : "a1"
-    },
+      filename: "addtogether", */
+      //runtime : "together-runtime"
+    //},
   },
   output: {
+    //assetModuleFilename  : "hasil-[hash]",
     asyncChunks: true,
+    //auxiliaryComment : "test comment doang dari auxiliary",
+    charset : true,
+    //chunkFormat : "" format of the chunk , e.g module, commonjs, the default is on the target options ,
+    //chunkLoadTimeout : 3600,
     path: import.meta.dirname + "/dist",
-    filename: "[name]-[contenthash].bundle.js",
+    filename: "new1-[name]-[chunkhash].bundle.js",
+    chunkFilename : "chunk-[chunkhash]-[id].js",
+    //chunkFormat : ""
+    //chunkLoadingGlobal : ""
+    //chunkLoading : "require", //changed how its being async ,
+    clean : true,
+    //compareBeforeEmit : false,
+    crossOriginLoading : "anonymous",
+    cssChunkFilename(pathData, assetInfo) {
+       return `cssChunk-${pathData}-[id]-${assetInfo?.contenthash}.css`;
+    },
+    cssFilename : "hasil.css",
+    devtoolFallbackModuleFilenameTemplate : "ok aman fallback module",
+    devtoolModuleFilenameTemplate : "webpack-[loaders]",
+    hashDigest : "hex",
+    hashDigestLength : 30,
+    hashFunction : "sha256",
+    hotUpdateChunkFilename : "chunkUpdate-[chunkhash]-[id].js",
+    iife : true,
+    ignoreBrowserWarnings : true,
+    importFunctionName : "__theimport__",
+    //library : [],
+    library : {
+      name : "libr",
+      type : "commonjs",
+      export : ["default"],
+      auxiliaryComment : "commnet library",
+      umdNamedDefine : false,
+    },
+    libraryExport : ["default"],
+    libraryTarget : "module",
+    module : false,
+    pathinfo : "verbose",
+    //publicPath : "",
+    scriptType : "module",
+    
+
+
+    //enabledChunkLoadingTypes : [], is it required, import, jsonc
+    //enabledLibraryTypes : [], type of library module that will be bundled from 3rd pary
+    //enabledWasmLoadingTypes : [], 
+    /* environment : {
+      //every es features to be enabled or disabled
+    } */
   },
   module: {
     rules: [
@@ -69,9 +115,8 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({ template: "./index.html" }),
     new webpack.ProgressPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-    }),
+    new MiniCssExtractPlugin({filename : "hasil-[id]-[name].css"}),
   ],
+  watch : true
 };
 export default config;

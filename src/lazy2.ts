@@ -1,4 +1,4 @@
 setTimeout(() => {
     import("./lazy")
 },1000)
-console.log("Sscond ts");
+console.log("Sscond tssasss");
