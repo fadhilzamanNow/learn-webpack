@@ -250,7 +250,8 @@ const config: webpack.Configuration = {
     new HtmlWebpackPlugin({ template: "./index.html" }),
     new webpack.ProgressPlugin(),
     new MiniCssExtractPlugin({ filename: "hasil-[id]-[name].css" }),
+    //false && new webpack.CleanPlugin()
+    true && new webpack.CleanPlugin()
   ],
-  watch: true,
 };
 export default config;
