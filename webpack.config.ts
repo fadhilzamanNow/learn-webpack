@@ -41,7 +41,7 @@ const config: webpack.Configuration = {
       return `cssChunk-${pathData}-[id]-${assetInfo?.contenthash}.css`;
     },
     cssFilename: "hasil.css",
-    devtoolFallbackModuleFilenameTemplate: "ok aman fallback module",
+   /*  devtoolFallbackModuleFilenameTemplate: "ok aman fallback module",
     devtoolModuleFilenameTemplate: "webpack-[loaders]",
     hashDigest: "hex",
     hashDigestLength: 30,
@@ -49,7 +49,7 @@ const config: webpack.Configuration = {
     hotUpdateChunkFilename: "chunkUpdate-[chunkhash]-[id].js",
     iife: true,
     ignoreBrowserWarnings: true,
-    importFunctionName: "__theimport__",
+    importFunctionName: "__theimport__", */
     //library : [],
     /*   library : {
       name : "libr",
@@ -60,8 +60,8 @@ const config: webpack.Configuration = {
     }, */
     /* libraryExport : ["default"],
     libraryTarget : "module", */
-    module: false,
-    pathinfo: "verbose",
+    /* module: false, */
+    //pathinfo: "verbose",
     //publicPath : "",
     /* scriptType : "module", */
 
@@ -75,7 +75,7 @@ const config: webpack.Configuration = {
   module: {
     //defaultRules : [], fallback if the module.rules is not set
     generator: {
-      asset: {
+      /* asset: {
         binary: true,
         dataUrl: {
           encoding: "base64",
@@ -85,21 +85,21 @@ const config: webpack.Configuration = {
         filename: "static-[path]-[name][ext]",
         publicPath: "", // if library from sources
         outputPath: "", //location for assets path
-      },
-      "asset/inline" : {
+      }, */
+     /*  "asset/inline" : {
         binary : false,
         dataUrl :  {
           encoding : "base64",
           mimetype : "",
         },
-      },
-      "asset/resource" : {
+      }, */
+     /*  "asset/resource" : {
         binary : false,
-      },
-      javascript : {
+      }, */
+     /*  javascript : {
         
-      },
-      "javascript/auto" : {
+      }, */
+  /*     "javascript/auto" : {
 
       },
       "javascript/dynamic": {
@@ -119,9 +119,9 @@ const config: webpack.Configuration = {
       },
       "css" : {
 
-      },
+      }, */
     },
-    parser : {
+   /*  parser : {
       "css" : {
         url : true
       },
@@ -138,15 +138,41 @@ const config: webpack.Configuration = {
         reexportExportsPresence : "error",
         url : false,
       },
-    },
+    }, */
+    //noParse : /b$/,
+    //unsafeCache : false
     rules: [
       {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
+        resourceQuery : /(inline)?/,
+        sideEffects : true
+        //scheme : "http"
+        /* parser : {
+          parse : {
+              // only useful if type is rule.type is json
+          }
+        } */
+        //issuer : /\.tsx/,
+        //assert : { type : /ts/ }
+        //compiler :
+        //enforce : "" just normal loader,
+        //"issuer" : "" the module that request an import
+        //layer : "" we give the layer that match the test as a specific layer ,
+        //issuerLayer : "", check wether the issuer layer name is matched
       },
       {
         test: /\.css$/,
+        type : "asset",
+        //mimetype : /s/,
+        //oneOf : [],
+        //options,
+   /*      generator : {
+          
+        }, */
+        parser : undefined,
+ 
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -165,13 +191,19 @@ const config: webpack.Configuration = {
           },
           {
             loader: "css-loader",
+            /* options or query : {
+              
+            } */
+           
           },
           {
             loader: "sass-loader",
+            
           },
         ],
       },
     ],
+    //fullySpecified : false
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
