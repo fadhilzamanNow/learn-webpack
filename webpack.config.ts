@@ -206,8 +206,46 @@ const config: webpack.Configuration = {
     //fullySpecified : false
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js",".scss",".css"],
+    alias : {
+      //"laziest" : import.meta.dirname + "src/other"
+          "other" : import.meta.dirname + "/src/other.ts"
+
+    },
+   aliasFields : ["browser"],
+   /* byDependency :{
+      //can resolve the fields for every module type
+   } */
+  cache : true,
+  //cachePredicate : () => true
+  //cacheWithContext :
+  //conditionNames : ["import"] 
+  descriptionFiles : ["package.json"],
+  enforceExtension : false,
+  //exportsFields : [],
+  /* extensionAlias : {
+
+  } */
+  /* extensions : [] */
+  fallback : {
+    "other" : import.meta.dirname + "/src/other.ts"
   },
+  //fullySpecified : false,
+  //importsFields : [],
+  //mainFields : [],
+  //mainFiles : [],
+  //plugins : []
+  modules : ["node_modules"],
+  unsafeCache : false,
+  symlinks : false,
+  //roots : [],
+  //restrictions : []
+  preferRelative : true,
+  preferAbsolute : false
+  },
+ /*  resolveLoader : {
+      find the loader js/json in node_modules
+  }, */
   plugins: [
     new HtmlWebpackPlugin({ template: "./index.html" }),
     new webpack.ProgressPlugin(),
