@@ -206,7 +206,20 @@ const config: webpack.Configuration = {
     //fullySpecified : false
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js",".scss",".css"],
+    /* alias : {
+      "laziest" : import.meta.dirname + "src/other"
+    } */
+   aliasFields : ["browser"],
+   /* byDependency :{
+      //can resolve the fields for every module type
+   } */
+  cache : true,
+  //cachePredicate : () => true
+  //cacheWithContext :
+  //conditionNames : ["import"] 
+  descriptionFiles : ["package.json"],
+  enforceExtension : false
   },
   plugins: [
     new HtmlWebpackPlugin({ template: "./index.html" }),
