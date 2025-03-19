@@ -7,3 +7,5 @@ setTimeout(() => {
 },3000)
 
 Mantap();
+
+console.log(__dirname)
