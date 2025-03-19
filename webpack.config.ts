@@ -279,7 +279,7 @@ const config: webpack.Configuration = {
     splitChunks : {
       minSize : 1,
       //maxAsyncSize : 30,
-      maxInitialSize : 30,
+      //maxInitialSize : 30,
       //maxSize : 2,
       chunks : "all",
       //maxAsyncRequests : 1,
@@ -289,12 +289,18 @@ const config: webpack.Configuration = {
       //minSizeReduction : 2000
       //enforceSizeThreshold : 20,
       name : "splitting",
-      usedExports : true,
+      //usedExports : true,
      /*  cacheGroups : {
         default : false,
         
       } */
     }
   },
+  performance : {
+    hints : "error",
+    maxAssetSize : 250000,
+    maxEntrypointSize : 250000,
+    //assetFilter : (fileName : string) => 
+  }
 };
 export default config;
