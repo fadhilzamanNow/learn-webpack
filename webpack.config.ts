@@ -301,6 +301,11 @@ const config: webpack.Configuration = {
     maxAssetSize : 250000,
     maxEntrypointSize : 250000,
     //assetFilter : (fileName : string) => 
+  },
+  node : {
+    global : true,
+    __dirname : false,
+    __filename : false
   }
 };
 export default config;
