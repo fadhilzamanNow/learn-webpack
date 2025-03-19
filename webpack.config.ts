@@ -307,12 +307,32 @@ const config: webpack.Configuration = {
     __dirname : false,
     __filename : false
   } */
- watch  : true,
+ watch  : false,
  watchOptions : {
   aggregateTimeout : 2000,
   ignored : /node_modules/,
   poll : 1000,
   stdin : true
+ },
+ cache : {
+  type : "filesystem",
+  allowCollectingMemory : true,
+  //buildDependencies
+  cacheDirectory : import.meta.dirname + "/cache",
+  cacheLocation : import.meta.dirname + "/cache/.cache_loc",
+  memoryCacheUnaffected : true,
+  compression : "gzip",
+  hashAlgorithm : "sha256",
+  idleTimeout : 2000,
+  idleTimeoutAfterLargeChanges : 2000,
+  idleTimeoutForInitialStore : 2000,
+  //managedPaths : ["./node_modules"],
+  maxAge : 1,
+  maxMemoryGenerations : 0,
+  name : `custom-cache`,
+  profile : true,
+  readonly : false,
+  store : "pack"
  }
 };
 export default config;
