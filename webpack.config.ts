@@ -4,7 +4,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const config: webpack.Configuration = {
   context: import.meta.dirname + "/src",
-  mode: "development",
+  mode: "production",
   //multiple main entry
   //entry : ["./index.ts","./index2.ts"],
   //object multiple  entry
@@ -41,7 +41,7 @@ const config: webpack.Configuration = {
       return `cssChunk-${pathData}-[id]-${assetInfo?.contenthash}.css`;
     },
     cssFilename: "hasil.css",
-   /*  devtoolFallbackModuleFilenameTemplate: "ok aman fallback module",
+    /*  devtoolFallbackModuleFilenameTemplate: "ok aman fallback module",
     devtoolModuleFilenameTemplate: "webpack-[loaders]",
     hashDigest: "hex",
     hashDigestLength: 30,
@@ -86,20 +86,20 @@ const config: webpack.Configuration = {
         publicPath: "", // if library from sources
         outputPath: "", //location for assets path
       }, */
-     /*  "asset/inline" : {
+      /*  "asset/inline" : {
         binary : false,
         dataUrl :  {
           encoding : "base64",
           mimetype : "",
         },
       }, */
-     /*  "asset/resource" : {
+      /*  "asset/resource" : {
         binary : false,
       }, */
-     /*  javascript : {
+      /*  javascript : {
         
       }, */
-  /*     "javascript/auto" : {
+      /*     "javascript/auto" : {
 
       },
       "javascript/dynamic": {
@@ -121,7 +121,7 @@ const config: webpack.Configuration = {
 
       }, */
     },
-   /*  parser : {
+    /*  parser : {
       "css" : {
         url : true
       },
@@ -146,8 +146,8 @@ const config: webpack.Configuration = {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
-        resourceQuery : /(inline)?/,
-        sideEffects : true
+        resourceQuery: /(inline)?/,
+        sideEffects: true,
         //scheme : "http"
         /* parser : {
           parse : {
@@ -164,15 +164,15 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.css$/,
-        type : "asset",
+        type: "asset",
         //mimetype : /s/,
         //oneOf : [],
         //options,
-   /*      generator : {
+        /*      generator : {
           
         }, */
-        parser : undefined,
- 
+        parser: undefined,
+
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
@@ -194,11 +194,9 @@ const config: webpack.Configuration = {
             /* options or query : {
               
             } */
-           
           },
           {
             loader: "sass-loader",
-            
           },
         ],
       },
@@ -206,44 +204,43 @@ const config: webpack.Configuration = {
     //fullySpecified : false
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js",".scss",".css"],
-    alias : {
+    extensions: [".tsx", ".ts", ".js", ".scss", ".css"],
+    alias: {
       //"laziest" : import.meta.dirname + "src/other"
-          "other" : import.meta.dirname + "/src/other.ts"
-
+      other: import.meta.dirname + "/src/other.ts",
     },
-   aliasFields : ["browser"],
-   /* byDependency :{
+    aliasFields: ["browser"],
+    /* byDependency :{
       //can resolve the fields for every module type
    } */
-  cache : true,
-  //cachePredicate : () => true
-  //cacheWithContext :
-  //conditionNames : ["import"] 
-  descriptionFiles : ["package.json"],
-  enforceExtension : false,
-  //exportsFields : [],
-  /* extensionAlias : {
+    cache: true,
+    //cachePredicate : () => true
+    //cacheWithContext :
+    //conditionNames : ["import"]
+    descriptionFiles: ["package.json"],
+    enforceExtension: false,
+    //exportsFields : [],
+    /* extensionAlias : {
 
   } */
-  /* extensions : [] */
-  fallback : {
-    "other" : import.meta.dirname + "/src/other.ts"
+    /* extensions : [] */
+    fallback: {
+      other: import.meta.dirname + "/src/other.ts",
+    },
+    //fullySpecified : false,
+    //importsFields : [],
+    //mainFields : [],
+    //mainFiles : [],
+    //plugins : []
+    modules: ["node_modules"],
+    unsafeCache: false,
+    symlinks: false,
+    //roots : [],
+    //restrictions : []
+    preferRelative: true,
+    preferAbsolute: false,
   },
-  //fullySpecified : false,
-  //importsFields : [],
-  //mainFields : [],
-  //mainFiles : [],
-  //plugins : []
-  modules : ["node_modules"],
-  unsafeCache : false,
-  symlinks : false,
-  //roots : [],
-  //restrictions : []
-  preferRelative : true,
-  preferAbsolute : false
-  },
- /*  resolveLoader : {
+  /*  resolveLoader : {
       find the loader js/json in node_modules
   }, */
   plugins: [
@@ -251,7 +248,53 @@ const config: webpack.Configuration = {
     new webpack.ProgressPlugin(),
     new MiniCssExtractPlugin({ filename: "hasil-[id]-[name].css" }),
     //false && new webpack.CleanPlugin()
-    true && new webpack.CleanPlugin()
+    true && new webpack.CleanPlugin(),
+    new webpack.ids.DeterministicChunkIdsPlugin({ maxLength: 3 }),
+    new webpack.ids.DeterministicModuleIdsPlugin({ maxLength: 6 }),
+
   ],
+  optimization: {
+    // chunkIds : "deterministic",
+    concatenateModules: true,
+    emitOnErrors: true,
+    avoidEntryIife: true,
+    flagIncludedChunks: true,
+    innerGraph: false,
+    mangleExports: "size",
+    mangleWasmImports: true,
+    mergeDuplicateChunks: false, // it should be true
+    minimize: true, // using terserplugin
+    //minimizer : "custom" //custom minimizer
+    // moduleIds : "deterministic",
+    nodeEnv: "production",
+    portableRecords: true,
+    realContentHash: true,
+    removeAvailableModules: true,
+    removeEmptyChunks: true,
+    runtimeChunk: {
+      //name : (entrypoint : any) => `runtime-${entrypoint?.name}`,
+      name: "allruntime-in-one",
+    },
+    sideEffects: true,
+    splitChunks : {
+      minSize : 1,
+      //maxAsyncSize : 30,
+      maxInitialSize : 30,
+      //maxSize : 2,
+      chunks : "all",
+      //maxAsyncRequests : 1,
+      //maxInitialRequests : 1,
+      //defaultSizeTypes : ['unknown']
+      minChunks : 1,
+      //minSizeReduction : 2000
+      //enforceSizeThreshold : 20,
+      name : "splitting",
+      usedExports : true,
+     /*  cacheGroups : {
+        default : false,
+        
+      } */
+    }
+  },
 };
 export default config;
