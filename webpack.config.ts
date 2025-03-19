@@ -183,23 +183,6 @@ const config: webpack.Configuration = {
         ],
         exclude: /node_modules/,
       },
-      {
-        test: /\.s[ac]ss$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: "css-loader",
-            /* options or query : {
-              
-            } */
-          },
-          {
-            loader: "sass-loader",
-          },
-        ],
-      },
     ],
     //fullySpecified : false
   },
@@ -333,6 +316,7 @@ const config: webpack.Configuration = {
   profile : true,
   readonly : false,
   store : "pack"
- }
+ },
+ extends : [import.meta.dirname + "/webpack-sass-config.ts"]
 };
 export default config;
