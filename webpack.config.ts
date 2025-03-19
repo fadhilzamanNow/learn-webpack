@@ -302,10 +302,17 @@ const config: webpack.Configuration = {
     maxEntrypointSize : 250000,
     //assetFilter : (fileName : string) => 
   },
-  node : {
+ /*  node : {
     global : true,
     __dirname : false,
     __filename : false
-  }
+  } */
+ watch  : true,
+ watchOptions : {
+  aggregateTimeout : 2000,
+  ignored : /node_modules/,
+  poll : 1000,
+  stdin : true
+ }
 };
 export default config;
