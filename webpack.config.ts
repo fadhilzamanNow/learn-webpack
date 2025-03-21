@@ -317,6 +317,9 @@ const config: webpack.Configuration = {
   readonly : false,
   store : "pack"
  },
- extends : [import.meta.dirname + "/webpack-sass-config.ts"]
+ extends : [import.meta.dirname + "/webpack-sass-config.ts"],
+ //target : ["node23.8"]
+ target : ["web"],
+ 
 };
 export default config;
